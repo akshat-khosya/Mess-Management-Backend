@@ -17,6 +17,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -24,6 +25,8 @@ app.use(
 );
 
 app.get("/", (req, res) => {
+  console.log(req.socket.localAddress);
+  console.log(req.rawHeaders[9]);
   res.send("Mess Management Backend");
 });
 
@@ -44,10 +47,10 @@ mongoose.connect(
 );
 
 // routes
-// const auth = require("./routes/auth.route");
+const auth =require("./routes/authRoutes");
 
 //routes use
-// app.use("/api/v1/auth/", auth);
+app.use("/api/v1/auth/", auth);
 
 app.listen(PORT, () => {
   console.log("Server started at " + process.env.URL);

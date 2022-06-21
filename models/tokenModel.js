@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-constTokenSchema=new mongoose.Schema({
+const TokenSchema=new mongoose.Schema({
     userID:{
         type:String,
         required:true,
@@ -16,6 +16,6 @@ constTokenSchema=new mongoose.Schema({
         type:String
     }
    
-},{timestamps:true});
+},{timestamps:true}); 
 
 module.exports=mongoose.model("Token",TokenSchema);
