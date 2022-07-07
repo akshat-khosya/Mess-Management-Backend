@@ -20,3 +20,13 @@ exports.newToken=async (query)=>{
         throw Error('Error while creating Token');
     }
 }
+
+exports.deleteToken=async (query)=>{
+    try {
+        Token.deleteOne(query);
+        return ;
+    } catch (err) {
+        console.log(err);
+        throw Error('Error while deleting Token');
+    }
+}

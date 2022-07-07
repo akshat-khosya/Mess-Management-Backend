@@ -46,3 +46,23 @@ exports.isAdmin = async (req, res, next) => {
       .json({ msg: "Invalid request" });
   }
 }
+
+exports.isValidToken = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+
+    if (token.length !== 64) {
+      return res
+      .status(400)
+      .json({ msg: "Invalid link" });
+     
+    }
+    req.user=token;
+    next();
+   
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ msg: "Invalid request" });
+  }
+}

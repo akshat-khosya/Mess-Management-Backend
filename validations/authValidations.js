@@ -7,4 +7,11 @@ const loginValidation=[
     check("email").isEmail(),
     check("password").isLength({min:6})
   ];
-module.exports = {newUserValidations,loginValidation};
+
+const changePasswordValidation=[
+  check("password").isLength({min:6}),
+  check("rpassword").isLength({min:6})
+]
+
+
+module.exports = {newUserValidations,loginValidation,changePasswordValidation};

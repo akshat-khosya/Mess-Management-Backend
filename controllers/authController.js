@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { useRegester, login, autoLogin, changePassword,forgetPassword } = require("../services/authService");
+const { useRegester, login, autoLogin, changePassword,forgetPassword, authToken } = require("../services/authService");
 exports.newUser = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -44,6 +44,10 @@ exports.autoLogin = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     const response = await changePassword(req.body, req.user, req.socket.localAddress);
     return res.status(response.code).json(response.data);
   } catch (err) {
@@ -56,6 +60,16 @@ exports.changePassword = async (req, res) => {
 exports.forgetPassword = async (req, res) => {
   try {
     const response = await forgetPassword(req.body);
+    return res.status(response.code).json(response.data);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ errors: "Server Error" });
+  }
+}
+
+exports.authToken=async(req,res)=>{
+  try {
+    const response = await authToken(req.user)
     return res.status(response.code).json(response.data);
   } catch (err) {
     console.log(err);
